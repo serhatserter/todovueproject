@@ -4,9 +4,7 @@
     <div id="adding">
       <input id="new" v-model="inputed" @keyup.enter="addList(inputed)" />
 
-      <b-button variant="success" id="add" @click="addList(inputed)"
-        >+</b-button
-      >
+      <b-button variant="success" id="add" @click="addList(inputed)">+</b-button>
     </div>
 
     <div id="changing">
@@ -25,20 +23,18 @@
       <h4 class="sitetitle">List Count: {{ currentList.length }}</h4>
     </div>
 
-    <div>{{ currentList }}</div>
-
     <div id="listing">
       <ul>
-        <div class="outcontent" v-for="(row, id) in currentList" :key="id">
+        <div class="outcontent" v-for="(row, index) in currentList" :key="row.id">
           <li>
             <input
               type="checkbox"
-              :id="randomKey()"
+              :id="row.id"
               v-model="row.status"
               true-value="completed"
               false-value="active"
             />
-            <label class="todocontent" :for="randomKey()">{{ row.title }}</label>
+            <label class="todocontent" :for="row.id">{{ row.title }}</label>
 
             <b-button variant="danger" @click="delRow(index)">X</b-button>
           </li>
@@ -120,7 +116,7 @@ export default {
           ).length === 0
         ) {
           this.doList.push({
-             id: this.randomKey(),
+            id: this.randomKey(),
             title: str,
             status: "active"
           });
