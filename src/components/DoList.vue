@@ -2,8 +2,7 @@
   <div id="dolist" class="text-center">
     <h1 class="sitetitle">To Do List</h1>
     <div id="adding">
-
-      <input id="new" v-model="inputed"  @keyup.enter="addList(inputed)" />
+      <input id="new" v-model="inputed" @keyup.enter="addList(inputed)" />
 
       <b-button variant="success" id="add" @click="addList(inputed)">+</b-button>
     </div>
@@ -11,41 +10,36 @@
     <div id="changing">
       <label v-for="(tab, i) in tabs" :key="i">
         <div id="radioButtons">
-          <input
-            type="radio"
-            name="tab"
-            :checked="tab.status"
-            @input="changeTab(i)"
-          />
+          <input type="radio" name="tab" :checked="tab.status" @input="changeTab(i)" />
           {{ tab.title }}
         </div>
       </label>
 
-      <br>
-      <br>
-      <h4 class="sitetitle" > List Count: {{ currentList.length }}</h4>
-
+      <br />
+      <br />
+      <h4 class="sitetitle">List Count: {{ currentList.length }}</h4>
     </div>
 
-    <div id="listing">
-      <ul>
-        <div class="outcontent" v-for="(row, index) in currentList" :key="row.id">
-          <li>
-            <input
-              type="checkbox"
-              :id="row.id"
-              v-model="row.status"
-              true-value="completed"
-              false-value="active"
-            />
-            <label class="todocontent" :for="row.id"> {{ row.title }}</label>
+      <div id="listing">
+        <ul>
+          <div class="outcontent" v-for="(row, index) in currentList" :key="row.id">
+            <li>
+              <input
+                type="checkbox"
+                :id="row.id"
+                v-model="row.status"
+                true-value="completed"
+                false-value="active"
+              />
+              <label class="todocontent" :for="row.id">{{ row.title }}</label>
 
-            <b-button variant="danger" @click="delRow(index)">X</b-button>
-          </li>
-        </div>
-      </ul>
+              <b-button variant="danger" @click="delRow(index)">X</b-button>
+            </li>
+          </div>
+        </ul>
+      </div>
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -125,7 +119,7 @@ export default {
             status: "active"
           });
         }
-        this.inputed= "";
+        this.inputed = "";
       }
     },
 
@@ -147,12 +141,11 @@ export default {
 </script>
 
 <style>
-
-#new{
+#new {
   float: inline-start;
   width: 250px;
   text-align: center;
-  margin-right:10px; 
+  margin-right: 10px;
 }
 .sitetitle {
   color: rgb(148, 148, 148);
@@ -167,6 +160,13 @@ export default {
   margin: 20px;
 }
 
+#listing {
+  display:inline-block;
+  padding: 10px;
+  width: 50%;
+  height: 200px;
+  overflow-y: scroll;
+}
 ul {
   list-style: none;
 }
@@ -174,7 +174,7 @@ ul {
 b-button {
   width: 40px;
   padding: 10px;
-  margin-left: 1000px;
+
   text-align: center;
   background-color: brown;
   color: white;
@@ -182,19 +182,17 @@ b-button {
 }
 
 #add {
-
   float: inline-start;
 }
 
 input[type="checkbox"] {
   display: none;
-  
 }
 input[type="checkbox"] + label {
   float: inline-start;
   width: 500px;
   padding: 10px;
-  margin-left: -10px; 
+  margin-left: -10px;
   background-color: whitesmoke;
 }
 input[type="checkbox"]:checked + label {
@@ -212,8 +210,8 @@ input[type="checkbox"]:checked + label {
   background-color: darkgray;
 }
 
-.todocontent{
-    margin-right:10px; 
+.todocontent {
+  margin-right: 10px;
 }
 .todocontent:hover {
   background-color: brown;
