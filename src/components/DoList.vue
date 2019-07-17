@@ -1,10 +1,11 @@
 <template>
   <div id="dolist">
     <center>
+      <h1 id="sitetitle">To Do List</h1>
       <div id="adding">
         <input id="new" v-model="inputed" @keyup.enter="addList(inputed)" />
 
-        <button id="add" @click="addList(inputed)">Add Button</button>
+        <b-button variant="success" id="add" @click="addList(inputed)">+</b-button>
       </div>
 
       <div id="changing">
@@ -125,6 +126,11 @@ export default {
 </script>
 
 <style>
+
+#sitetitle{
+  color: darkgray;
+}
+
 #adding {
   padding: 20px;
   padding-bottom: 0px;
@@ -141,6 +147,7 @@ ul {
 b-button {
   width: 40px;
   padding: 10px;
+  margin: 10px;
   text-align: center;
   background-color: brown;
   color: white;
