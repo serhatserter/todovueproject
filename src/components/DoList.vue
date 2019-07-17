@@ -3,6 +3,7 @@
     <center>
       <div id="adding">
         <input id="new" v-model="inputed" @keyup.enter="addList(inputed)" />
+
         <button id="add" @click="addList(inputed)">Add Button</button>
       </div>
 
@@ -26,9 +27,9 @@
                 true-value="completed"
                 false-value="active"
               />
-              <label :for="index">{{row.title}}</label>
+              <label class="todocontent" :for="index">{{row.title}}</label>
 
-              <label class="delete" @click="delRow(index)">X</label>
+              <b-button variant="danger" @click="delRow(index)">X</b-button>
             </li>
           </div>
         </ul>
@@ -93,12 +94,21 @@ export default {
 
   methods: {
     addList(str) {
-      this.doList.push({ title: str, status: "active" });
+      if (str !== null) {
+        str = str.trim();
+        console.log(str.trim());
+        if (
+          this.doList.filter(v => v.title === str || v.title === " " || str.trim() === "").length === 0) {
+          this.doList.push({
+            title: str,
+            status: "active"
+          });
+        }
+      }
     },
 
     delRow(num) {
       this.doList.splice(num, 1);
-      console.log(this.selectList);
     },
 
     changeTab(tabIndex) {
@@ -128,11 +138,7 @@ ul {
   list-style: none;
 }
 
-.delete:hover {
-  background-color: red;
-}
-
-.delete {
+b-button {
   width: 40px;
   padding: 10px;
   text-align: center;
@@ -145,7 +151,6 @@ input[type="checkbox"] {
   width: 30px;
   height: 30px;
 }
-
 input[type="checkbox"] + label {
   float: inline-start;
   width: 250px;
@@ -153,14 +158,9 @@ input[type="checkbox"] + label {
   text-align: center;
   background-color: whitesmoke;
 }
-
 input[type="checkbox"]:checked + label {
   background-color: darkgray;
   text-decoration: line-through;
-}
-
-input[type="radio"] {
-  display: none;
 }
 
 #radioButtons {
@@ -171,5 +171,9 @@ input[type="radio"] {
 
 #radioButtons:hover {
   background-color: darkgray;
+}
+
+.todocontent {
+  margin-top: -100px;
 }
 </style>
