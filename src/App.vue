@@ -18,8 +18,8 @@ export default {
 </script>
 
 <style>
-  body{
-    background-color: rgb(236, 225, 205);
-    font-family: 'Courier New', Courier, monospace;
-  }
+body {
+  background-color: rgb(236, 225, 205);
+  font-family: "Courier New", Courier, monospace;
+}
 </style>

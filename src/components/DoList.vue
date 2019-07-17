@@ -1,7 +1,7 @@
 <template>
-  <div id="dolist">
-    <center>
-      <h1 id="sitetitle">To Do List</h1>
+  <div id="dolist" class="text-center">
+    
+      <h1 class="sitetitle">To Do List</h1>
       <div id="adding">
         <input id="new" v-model="inputed" @keyup.enter="addList(inputed)" />
 
@@ -15,6 +15,8 @@
             {{ tab.title }}
           </div>
         </label>
+        <br>
+        <h4 class="sitetitle">List Count: {{currentList.length}}</h4>
       </div>
 
       <div id="listing">
@@ -35,7 +37,7 @@
           </div>
         </ul>
       </div>
-    </center>
+
   </div>
 </template>
 
@@ -72,6 +74,7 @@ export default {
   props: {},
 
   computed: {
+
     currentTab() {
       return this.tabs.find(tab => tab.status).title;
     },
@@ -97,7 +100,7 @@ export default {
     addList(str) {
       if (str !== null) {
         str = str.trim();
-        console.log(str.trim());
+
         if (
           this.doList.filter(v => v.title === str || v.title === " " || str.trim() === "").length === 0) {
           this.doList.push({
@@ -127,8 +130,8 @@ export default {
 
 <style>
 
-#sitetitle{
-  color: darkgray;
+.sitetitle{
+  color: rgb(148, 148, 148);
 }
 
 #adding {
