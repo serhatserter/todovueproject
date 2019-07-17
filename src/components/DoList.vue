@@ -1,43 +1,50 @@
 <template>
   <div id="dolist" class="text-center">
-    
-      <h1 class="sitetitle">To Do List</h1>
-      <div id="adding">
-        <input id="new" v-model="inputed" @keyup.enter="addList(inputed)" />
+    <h1 class="sitetitle">To Do List</h1>
+    <div id="adding">
+      <input id="new" v-model="inputed" @keyup.enter="addList(inputed)" />
 
-        <b-button variant="success" id="add" @click="addList(inputed)">+</b-button>
-      </div>
+      <b-button variant="success" id="add" @click="addList(inputed)"
+        >+</b-button
+      >
+    </div>
 
-      <div id="changing">
-        <label v-for="(tab, i) in tabs" :key="i">
-          <div id="radioButtons">
-            <input type="radio" name="tab" :checked="tab.status" @input="changeTab(i)" />
-            {{ tab.title }}
-          </div>
-        </label>
-        <br>
-        <h4 class="sitetitle">List Count: {{currentList.length}}</h4>
-      </div>
+    <div id="changing">
+      <label v-for="(tab, i) in tabs" :key="i">
+        <div id="radioButtons">
+          <input
+            type="radio"
+            name="tab"
+            :checked="tab.status"
+            @input="changeTab(i)"
+          />
+          {{ tab.title }}
+        </div>
+      </label>
+      <br />
+      <h4 class="sitetitle">List Count: {{ currentList.length }}</h4>
+    </div>
 
-      <div id="listing">
-        <ul>
-          <div class="outcontent" v-for="(row,index) in currentList" :key="index">
-            <li>
-              <input
-                type="checkbox"
-                :id="index"
-                v-model="row.status"
-                true-value="completed"
-                false-value="active"
-              />
-              <label class="todocontent" :for="index">{{row.title}}</label>
+    <div>{{ currentList }}</div>
 
-              <b-button variant="danger" @click="delRow(index)">X</b-button>
-            </li>
-          </div>
-        </ul>
-      </div>
+    <div id="listing">
+      <ul>
+        <div class="outcontent" v-for="(row, id) in currentList" :key="id">
+          <li>
+            <input
+              type="checkbox"
+              :id="randomKey()"
+              v-model="row.status"
+              true-value="completed"
+              false-value="active"
+            />
+            <label class="todocontent" :for="randomKey()">{{ row.title }}</label>
 
+            <b-button variant="danger" @click="delRow(index)">X</b-button>
+          </li>
+        </div>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -45,10 +52,11 @@
 export default {
   data() {
     return {
-      inputed: null,
+      inputed: "",
 
       doList: [
         {
+          id: this.randomKey(),
           title: "deneme",
           status: "active" //completed
         }
@@ -74,7 +82,6 @@ export default {
   props: {},
 
   computed: {
-
     currentTab() {
       return this.tabs.find(tab => tab.status).title;
     },
@@ -97,13 +104,23 @@ export default {
   },
 
   methods: {
+    randomKey() {
+      return Math.random()
+        .toString(16)
+        .slice(2);
+    },
+
     addList(str) {
       if (str !== null) {
         str = str.trim();
 
         if (
-          this.doList.filter(v => v.title === str || v.title === " " || str.trim() === "").length === 0) {
+          this.doList.filter(
+            v => v.title === str || v.title === " " || str.trim() === ""
+          ).length === 0
+        ) {
           this.doList.push({
+             id: this.randomKey(),
             title: str,
             status: "active"
           });
@@ -129,8 +146,7 @@ export default {
 </script>
 
 <style>
-
-.sitetitle{
+.sitetitle {
   color: rgb(148, 148, 148);
 }
 
