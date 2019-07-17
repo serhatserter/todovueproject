@@ -2,7 +2,8 @@
   <div id="dolist" class="text-center">
     <h1 class="sitetitle">To Do List</h1>
     <div id="adding">
-      <input id="new" v-model="inputed" @keyup.enter="addList(inputed)" />
+
+      <input id="new" v-model="inputed"  @keyup.enter="addList(inputed)" />
 
       <b-button variant="success" id="add" @click="addList(inputed)">+</b-button>
     </div>
@@ -19,8 +20,11 @@
           {{ tab.title }}
         </div>
       </label>
-      <br />
-      <h4 class="sitetitle">List Count: {{ currentList.length }}</h4>
+
+      <br>
+      <br>
+      <h4 class="sitetitle" > List Count: {{ currentList.length }}</h4>
+
     </div>
 
     <div id="listing">
@@ -34,7 +38,7 @@
               true-value="completed"
               false-value="active"
             />
-            <label class="todocontent" :for="row.id">{{ row.title }}</label>
+            <label class="todocontent" :for="row.id"> {{ row.title }}</label>
 
             <b-button variant="danger" @click="delRow(index)">X</b-button>
           </li>
@@ -121,6 +125,7 @@ export default {
             status: "active"
           });
         }
+        this.inputed= "";
       }
     },
 
@@ -142,6 +147,13 @@ export default {
 </script>
 
 <style>
+
+#new{
+  float: inline-start;
+  width: 250px;
+  text-align: center;
+  margin-right:10px; 
+}
 .sitetitle {
   color: rgb(148, 148, 148);
 }
@@ -162,22 +174,27 @@ ul {
 b-button {
   width: 40px;
   padding: 10px;
-  margin: 10px;
+  margin-left: 1000px;
   text-align: center;
   background-color: brown;
   color: white;
+  float: inline-start;
+}
+
+#add {
+
+  float: inline-start;
 }
 
 input[type="checkbox"] {
-  margin-top: 10px;
-  width: 30px;
-  height: 30px;
+  display: none;
+  
 }
 input[type="checkbox"] + label {
   float: inline-start;
-  width: 250px;
+  width: 500px;
   padding: 10px;
-  text-align: center;
+  margin-left: -10px; 
   background-color: whitesmoke;
 }
 input[type="checkbox"]:checked + label {
@@ -195,7 +212,11 @@ input[type="checkbox"]:checked + label {
   background-color: darkgray;
 }
 
-.todocontent {
-  margin-top: -100px;
+.todocontent{
+    margin-right:10px; 
+}
+.todocontent:hover {
+  background-color: brown;
+  color: white;
 }
 </style>
