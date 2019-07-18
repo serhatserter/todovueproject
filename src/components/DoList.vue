@@ -59,11 +59,7 @@
         maxchar: 25,
 
         doList: [
-          {
-            id: this.randomKey(),
-            title: "Example Task",
-            status: "active" //completed
-          }
+          //{id: this.randomKey(), title: "Example Task", status: "active"}
         ],
         tabs: [
           {
@@ -99,8 +95,9 @@
     },
 
     computed: {
-      remainingChar: function(){
+      remainingChar(){
         return this.maxchar - this.inputed.length;
+        
       },
 
       currentTab() {
@@ -155,10 +152,11 @@
       },
 
       addList(str) {
-        if (str !== null) {
+        console.log(str);
+        if (str.trim() !== "") {
           str = str.trim();
 
-          if (this.doList.filter(v => v.title === str || str.trim() === "").length === 0) {
+          if (this.doList.filter(v => v.title === str || str === "").length === 0) {
             
             this.doList.push({
               id: this.randomKey(),
@@ -178,6 +176,11 @@
           }
 
           this.inputed = "";
+        }
+        else{
+            this.alertmessage = "Please, add text!";
+            this.showDismissibleAlert = true;
+             this.inputed = "";
         }
       },
 
