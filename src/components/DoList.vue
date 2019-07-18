@@ -1,7 +1,6 @@
 <template>
   <div id="dolist" class="text-center">
     <br />
-    <div>New Branch</div>
     <h1 class="sitetitle">To Do List</h1>
 
     <div id="adding">
@@ -30,27 +29,15 @@
       <h4 class="sitetitle">List:</h4>
     </div>
 
-    <div id="listing">
-      <ul>
-        <li class="outcontent" v-for="(row, index) in currentList" :key="row.id">
-          <input
-            type="checkbox"
-            :id="row.id"
-            v-model="row.status"
-            true-value="completed"
-            false-value="active"
-          />
-          <label class="todocontent" :for="row.id">{{ row.title }}</label>
-
-          <b-button id="deletebutton" variant="danger" @click="delRow(index)">X</b-button>
-        </li>
-      </ul>
-    </div>
+    <listing :list="this.doList" :listtabs ="this.tabs"></listing>
   </div>
 </template>
 
 <script>
+  import Listing from "./Listing.vue";
   export default {
+    
+    components: { Listing },
     data() {
       return {
         inputed: "",
@@ -61,6 +48,7 @@
         doList: [
           //{id: this.randomKey(), title: "Example Task", status: "active"}
         ],
+
         tabs: [
           {
             title: "All",
@@ -88,9 +76,6 @@
             this.alertmessage = "Maximum Characters Reached.";
             this.showDismissibleAlert = true;
           }
-          else{
-            //this.showDismissibleAlert=false;
-          }
         }
     },
 
@@ -99,44 +84,20 @@
         return this.maxchar - this.inputed.length;
         
       },
-
-      currentTab() {
-        return this.tabs.find(tab => tab.status).title;
-      },
-
-      currentCounts() {
-        let list = this.doList;
-
-        switch (this.currentTab) {
-          case "Active":
-            list = this.doList.filter(todo => todo.status === "active");
-            return todo.length;
-            break;
-
-          case "Completed":
-            list = this.doList.filter(todo => todo.status === "completed");
-            break;
-        }
-      },
-
-      currentList() {
-        let list = this.doList;
-
-        switch (this.currentTab) {
-          case "Active":
-            list = this.doList.filter(todo => todo.status === "active");
-            break;
-
-          case "Completed":
-            list = this.doList.filter(todo => todo.status === "completed");
-            break;
-        }
-
-        return list;
-      }
     },
 
     methods: {
+    
+
+      changeTab(tabIndex) {
+        this.tabs.forEach(
+          function(tab, i) {
+            this.tabs[i].status = false;
+          }.bind(this)
+        );
+
+        this.tabs[tabIndex].status = true;
+      },
 
       totalCount(val) {
         if (val === "all") {
@@ -152,7 +113,6 @@
       },
 
       addList(str) {
-        console.log(str);
         if (str.trim() !== "") {
           str = str.trim();
 
@@ -184,19 +144,7 @@
         }
       },
 
-      delRow(num) {
-        this.doList.splice(num, 1);
-      },
 
-      changeTab(tabIndex) {
-        this.tabs.forEach(
-          function(tab, i) {
-            this.tabs[i].status = false;
-          }.bind(this)
-        );
-
-        this.tabs[tabIndex].status = true;
-      }
     }
   };
 </script>
@@ -227,13 +175,6 @@
     margin: 20px;
   }
 
-  #listing {
-    display: inline-block;
-    padding: 10px;
-    width: 50%;
-    height: 200px;
-  }
-
   ul {
     list-style: none;
   }
@@ -252,9 +193,7 @@
     float: inline-start;
   }
 
-  input[type="checkbox"] {
-    display: none;
-  }
+
 
   input[type="textbox"] {
     padding: 5px;
@@ -262,20 +201,6 @@
     border-width: 1px;
     border-color: rgb(34, 34, 34);
     border-radius: 10px;
-  }
-
-  input[type="checkbox"] + label {
-    cursor: pointer;
-    float: inline-start;
-    width: 85%;
-    padding: 10px;
-    margin-left: -10px;
-    background-color: whitesmoke;
-  }
-
-  input[type="checkbox"]:checked + label {
-    background-color: darkgray;
-    text-decoration: line-through;
   }
 
   #radioButtons {
@@ -294,23 +219,6 @@
 
   #radioButtonsCount {
     background-color: darkgray;
-  }
-
-  #deletebutton {
-    font-size: 10px;
-  }
-
-  .todocontent {
-    border-style: solid;
-    border-width: 1px;
-    border-color: rgb(34, 34, 34);
-    border-radius: 10px;
-    margin-right: 10px;
-  }
-
-  .todocontent:hover {
-    background-color: brown;
-    color: white;
   }
 
   #alert{
