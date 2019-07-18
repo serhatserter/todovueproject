@@ -1,7 +1,7 @@
 <template>
     <div id="listing">
       <ul>
-        <li class="outcontent" v-for="(row, index) in currentList" :key="row.id">
+        <li class="outcontent" v-for="row in currentList" :key="row.id">
           <input
             type="checkbox"
             :id="row.id"
@@ -11,7 +11,7 @@
           />
           <label class="todocontent" :for="row.id">{{ row.title }}</label>
 
-          <b-button id="deletebutton" variant="danger" @click="delRow(index)">X</b-button>
+          <b-button id="deletebutton" variant="danger" @click="delRow(row.id)">X</b-button>
         </li>
       </ul>
     </div>
@@ -65,9 +65,14 @@
     },
 
     methods: {
-      
+
       delRow(num) {
-        this.doList.splice(num, 1);
+        
+        let deleted = this.doList.find(tab => tab.id === num);
+        var indx = this.doList.indexOf(deleted);
+
+        //this.doList.remove(deleted.title);
+        this.doList.splice(indx, 1);
       },
 
 
