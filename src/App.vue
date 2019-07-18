@@ -19,7 +19,7 @@ export default {
 
 <style>
 body {
-  background-color: rgb(236, 225, 205);
+  background-color: rgb(75, 75, 75);
   font-family: "Courier New", Courier, monospace;
 }
 </style>

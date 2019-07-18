@@ -1,10 +1,10 @@
 <template>
   <div id="dolist" class="text-center">
-    <br>
+    <br />
     <h1 class="sitetitle">To Do List</h1>
-    
+
     <div id="adding">
-      <input id="new" v-model="inputed" @keyup.enter="addList(inputed)" />
+      <input id="new" type="textbox" v-model="inputed" @keyup.enter="addList(inputed)" />
       <b-button variant="success" id="add" @click="addList(inputed)">+</b-button>
     </div>
 
@@ -25,18 +25,18 @@
 
     <div id="listing">
       <ul>
-          <li class="outcontent" v-for="(row, index) in currentList" :key="row.id">
-            <input
-              type="checkbox"
-              :id="row.id"
-              v-model="row.status"
-              true-value="completed"
-              false-value="active"
-            />
-            <label class="todocontent" :for="row.id">{{ row.title }}</label>
+        <li class="outcontent" v-for="(row, index) in currentList" :key="row.id">
+          <input
+            type="checkbox"
+            :id="row.id"
+            v-model="row.status"
+            true-value="completed"
+            false-value="active"
+          />
+          <label class="todocontent" :for="row.id">{{ row.title }}</label>
 
-            <b-button variant="danger" @click="delRow(index)">X</b-button>
-          </li>
+          <b-button id="deletebutton" variant="danger" @click="delRow(index)">X</b-button>
+        </li>
       </ul>
     </div>
   </div>
@@ -48,11 +48,10 @@ export default {
     return {
       inputed: "",
 
-
       doList: [
         {
           id: this.randomKey(),
-          title: "deneme",
+          title: "Example Task",
           status: "active" //completed
         }
       ],
@@ -84,7 +83,7 @@ export default {
       return this.tabs.find(tab => tab.status).title;
     },
 
-    currentCounts(){
+    currentCounts() {
       let list = this.doList;
 
       switch (this.currentTab) {
@@ -97,8 +96,6 @@ export default {
           list = this.doList.filter(todo => todo.status === "completed");
           break;
       }
-
-  
     },
 
     currentList() {
@@ -119,8 +116,8 @@ export default {
   },
 
   methods: {
-    totalCount(val){
-      if(val==='all') {
+    totalCount(val) {
+      if (val === "all") {
         return this.doList.length;
       }
       return this.doList.filter(todo => todo.status === val).length;
@@ -193,7 +190,6 @@ export default {
   padding: 10px;
   width: 50%;
   height: 200px;
-  overflow-y: scroll;
 }
 ul {
   list-style: none;
@@ -201,14 +197,13 @@ ul {
 
 b-button {
   width: 40px;
-  padding: 10px;
+  padding: 5px;
 
   text-align: center;
   background-color: brown;
   color: white;
   float: inline-start;
 }
-
 
 #add {
   float: inline-start;
@@ -217,6 +212,14 @@ b-button {
 input[type="checkbox"] {
   display: none;
 }
+input[type="textbox"] {
+  padding: 5px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(34, 34, 34);
+  border-radius: 10px;
+}
+
 input[type="checkbox"] + label {
   cursor: pointer;
   float: inline-start;
@@ -244,11 +247,18 @@ input[type="checkbox"]:checked + label {
   background-color: darkgray;
 }
 
-#radioButtonsCount{
-    background-color: darkgray;
+#radioButtonsCount {
+  background-color: darkgray;
 }
 
+#deletebutton{
+  font-size: 10px;
+}
 .todocontent {
+  border-style: solid;
+  border-width: 1px;
+  border-color: rgb(34, 34, 34);
+  border-radius: 10px;
   margin-right: 10px;
 }
 .todocontent:hover {
