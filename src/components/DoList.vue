@@ -4,14 +4,13 @@
     <h1 class="sitetitle">To Do List</h1>
 
     <div id="adding">
-      <input
+      <b-input
         id="new"
-        type="textbox"
         :maxlength="maxchar"
         v-model="inputed"
         @keyup.enter="addList(inputed)"
       />
-      <b-button variant="success" id="add" @click="addList(inputed)">+</b-button>
+      <b-button variant="success" id="add" @click="addList(inputed)">Add Task</b-button>
     </div>
 
     <div id="changing">
@@ -28,17 +27,25 @@
       <br />
       <br />
 
+      <h4 class="sitetitle">List:</h4>
+      <br />
       <b-alert
         id="alert"
         v-model="showDismissibleAlert"
         variant="danger"
         dismissible
       >{{alertmessage}}</b-alert>
-
-      <h4 class="sitetitle">List:</h4>
     </div>
 
-    <listing :list="this.doList" :listtabs="this.tabs"></listing>
+  <div id="listing">
+    <ul>
+      <li class="outcontent" v-for="row in currentList" :key="row.id">
+      <listing :getrow="row" :list="doList"></listing>
+      
+      </li>
+    </ul>
+  </div>
+
   </div>
 </template>
 
@@ -52,6 +59,7 @@ export default {
       showDismissibleAlert: false,
       alertmessage: "",
       maxchar: 25,
+      deneme: {id: this.randomKey(), title: "Example Task", status: "active"},
 
       doList: [
         //{id: this.randomKey(), title: "Example Task", status: "active"}
@@ -74,7 +82,6 @@ export default {
           count: 0
         }
       ],
-      selectList: []
     };
   },
 
@@ -90,6 +97,25 @@ export default {
   computed: {
     remainingChar() {
       return this.maxchar - this.inputed.length;
+    },
+
+    currentTab() {
+      return this.tabs.find(tab => tab.status).title;
+    },
+
+    currentList() {
+      let templist = this.doList;
+      switch (this.currentTab) {
+        case "Active":
+          templist = this.doList.filter(todo => todo.status === "active");
+          break;
+
+        case "Completed":
+          templist = this.doList.filter(todo => todo.status === "completed");
+          break;
+      }
+
+      return templist;
     }
   },
 
@@ -151,10 +177,10 @@ export default {
 
 <style>
 #new {
-  float: inline-block;
   width: 38%;
   text-align: center;
-  margin-right: 1%;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .sitetitle {
@@ -189,15 +215,15 @@ b-button {
 }
 
 #add {
-  float: inline-start;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
-input[type="textbox"] {
+[type="text"] {
   padding: 5px;
   border-style: solid;
   border-width: 1px;
   border-color: rgb(34, 34, 34);
-  border-radius: 10px;
 }
 
 #radioButtons {
@@ -221,5 +247,15 @@ input[type="textbox"] {
 #alert {
   display: inline-block;
   width: 40%;
+}
+
+#listing {
+  display: inline-block;
+  padding: 1%;
+  width: 50%;
+  height: 200px;
+}
+.form-control {
+    display: inline-block !important;
 }
 </style>
