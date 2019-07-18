@@ -28,10 +28,6 @@ export default {
 
   },
 
-  computed: {
-
-  },
-
   methods: {
     delRow(num) {
       let deleted = this.doList.find(tab => tab.id === num);
