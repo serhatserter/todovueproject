@@ -73,7 +73,7 @@ export default {
 <style>
 #listing {
   display: inline-block;
-  padding: 10px;
+  padding: 1%;
   width: 50%;
   height: 200px;
 }
@@ -102,7 +102,7 @@ input[type="checkbox"] + label {
   cursor: pointer;
   float: inline-start;
   width: 85%;
-  padding: 10px;
+  padding: 1%;
   margin-left: -10px;
   background-color: whitesmoke;
 }
