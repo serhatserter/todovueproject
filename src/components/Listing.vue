@@ -1,19 +1,8 @@
 <template>
-  <div id="listing">
-    <ul>
-      <li class="outcontent" v-for="row in currentList" :key="row.id">
-        <input
-          type="checkbox"
-          :id="row.id"
-          v-model="row.status"
-          true-value="completed"
-          false-value="active"
-        />
-        <label class="todocontent" :for="row.id">{{ row.title }}</label>
-
-        <b-button id="deletebutton" variant="danger" @click="delRow(row.id)">X</b-button>
-      </li>
-    </ul>
+  <div>
+    <input type="checkbox" :id="rowlisting.id" v-model="rowlisting.status" true-value="completed" false-value="active"/>
+    <label class="todocontent" :for="rowlisting.id">{{ rowlisting.title }}</label>
+    <b-button id="deletebutton" variant="danger" @click="delRow(rowlisting.id)">X</b-button>
   </div>
 </template>
 
@@ -21,42 +10,26 @@
 export default {
   data() {
     return {
+      rowlisting: this.getrow,
       doList: this.list,
-      tabs: this.listtabs
     };
   },
 
   props: {
+
     list: {
       type: Array,
       required: true
     },
 
-    listtabs: {
-      type: Array,
+    getrow: {
       required: true
-    }
+    },
+
   },
 
   computed: {
-    currentTab() {
-      return this.tabs.find(tab => tab.status).title;
-    },
 
-    currentList() {
-      let templist = this.list;
-      switch (this.currentTab) {
-        case "Active":
-          templist = this.list.filter(todo => todo.status === "active");
-          break;
-
-        case "Completed":
-          templist = this.list.filter(todo => todo.status === "completed");
-          break;
-      }
-
-      return templist;
-    }
   },
 
   methods: {
@@ -71,12 +44,7 @@ export default {
 </script>
 
 <style>
-#listing {
-  display: inline-block;
-  padding: 1%;
-  width: 50%;
-  height: 200px;
-}
+
 .todocontent {
   border-style: solid;
   border-width: 1px;

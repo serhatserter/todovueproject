@@ -38,7 +38,15 @@
       <h4 class="sitetitle">List:</h4>
     </div>
 
-    <listing :list="this.doList" :listtabs="this.tabs"></listing>
+  <div id="listing">
+    <ul>
+      <li class="outcontent" v-for="row in currentList" :key="row.id">
+      <listing :getrow="row" :list="doList"></listing>
+      
+      </li>
+    </ul>
+  </div>
+
   </div>
 </template>
 
@@ -52,6 +60,7 @@ export default {
       showDismissibleAlert: false,
       alertmessage: "",
       maxchar: 25,
+      deneme: {id: this.randomKey(), title: "Example Task", status: "active"},
 
       doList: [
         //{id: this.randomKey(), title: "Example Task", status: "active"}
@@ -90,6 +99,25 @@ export default {
   computed: {
     remainingChar() {
       return this.maxchar - this.inputed.length;
+    },
+
+    currentTab() {
+      return this.tabs.find(tab => tab.status).title;
+    },
+
+    currentList() {
+      let templist = this.doList;
+      switch (this.currentTab) {
+        case "Active":
+          templist = this.doList.filter(todo => todo.status === "active");
+          break;
+
+        case "Completed":
+          templist = this.doList.filter(todo => todo.status === "completed");
+          break;
+      }
+
+      return templist;
     }
   },
 
@@ -221,5 +249,12 @@ input[type="textbox"] {
 #alert {
   display: inline-block;
   width: 40%;
+}
+
+#listing {
+  display: inline-block;
+  padding: 1%;
+  width: 50%;
+  height: 200px;
 }
 </style>
