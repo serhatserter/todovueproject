@@ -56,7 +56,7 @@
         inputed: "",
         showDismissibleAlert: false,
         alertmessage: "",
-        maxchar: 10,
+        maxchar: 25,
 
         doList: [
           {
