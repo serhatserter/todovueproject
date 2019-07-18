@@ -4,12 +4,7 @@
     <h1 class="sitetitle">To Do List</h1>
 
     <div id="adding">
-      <b-input
-        id="new"
-        :maxlength="maxchar"
-        v-model="inputed"
-        @keyup.enter="addList(inputed)"
-      />
+      <b-input id="new" :maxlength="maxchar" v-model="inputed" @keyup.enter="addList(inputed)"/>
       <b-button variant="success" id="add" @click="addList(inputed)">Add Task</b-button>
     </div>
 
@@ -40,7 +35,8 @@
   <div id="listing">
     <ul>
       <li class="outcontent" v-for="row in currentList" :key="row.id">
-      <listing :getrow="row" :list="doList"></listing>
+        
+        <listing :getrow="row" @delete="delRow(row.id)"></listing>
       
       </li>
     </ul>
@@ -144,32 +140,31 @@ export default {
     },
 
     addList(str) {
-      if (str.trim() !== "") {
-        str = str.trim();
 
-        if (
-          this.doList.filter(v => v.title === str || str === "").length === 0
-        ) {
-          this.doList.push({
-            id: this.randomKey(),
-            title: str,
-            status: "active"
-          });
-          this.showDismissibleAlert = false;
-        } else if (str.length !== 0) {
-          this.alertmessage = "Same Task Added!";
-          this.showDismissibleAlert = true;
-        } else {
-          this.alertmessage = "Please, add text!";
-          this.showDismissibleAlert = true;
-        }
-
-        this.inputed = "";
-      } else {
+      if (!this.doList.find(v => v.title === str.trim()) && str.trim() !== "") {
+          
+        this.doList.push({id: this.randomKey(), title: str, status: "active"});
+        this.showDismissibleAlert = false;
+      } 
+      else if (str.trim().length !== 0) {
+        this.alertmessage = "Same Task Added!";
+        this.showDismissibleAlert = true;
+      } 
+      else {
         this.alertmessage = "Please, add text!";
         this.showDismissibleAlert = true;
-        this.inputed = "";
       }
+
+      this.inputed = "";
+      
+
+    },
+
+    delRow(num) {
+      let deleted = this.doList.find(tab => tab.id === num);
+      var indx = this.doList.indexOf(deleted);
+
+      this.doList.splice(indx, 1);
     }
   }
 };
