@@ -1,4 +1,4 @@
 # Simple to-do List Project
 
 ## Netlify Link: 
-https://vuequizshow.netlify.com
+https://todovueproject.netlify.com
